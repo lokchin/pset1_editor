@@ -10,15 +10,23 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
     imagem_invertida = imagem.invertida()
     imagem_invertida.salvar("test_results/bluegill_invertida.png")
 
-![bluegill_invertida.png](test_results\bluegill_invertida.png)
+![bluegill_invertida.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/bluegill_invertida.png)
 
 ## Questão 3
 
-|     |     |     |  X  |  |     |     |
-| --- | --- | --- | --- |---| --- | --- | --- |
-| 0.00 | -0.07 | 0.00 |     | 80 | 53 | 99 |
-| -0.45 | 1.20 | -0.25 |   | 129 | 127 | 148 |
-| 0.00 | -0.12 | 0.00 |     | 175 | 174 | 193 |
+|     |     |     | 
+| --- | --- | --- |
+| 0.00 | -0.07 | 0.00 | 
+| -0.45 | 1.20 | -0.25 |
+| 0.00 | -0.12 | 0.00 |
+
+###### X
+
+|     |     |     |
+|---| --- | --- |
+| 80 | 53 | 99 |
+| 129 | 127 | 148 |
+| 175 | 174 | 193 |
 
 #### 👇
 
