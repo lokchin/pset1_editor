@@ -40,7 +40,8 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
 <br>
 
 ## Questão 4
-<br>
+
+```
     imagem = PILImage.open("test_images/pigbird.png")
     largura, altura = imagem.size
     pixels = list(imagem.getdata())
@@ -59,5 +60,6 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
     nova_imagem = PILImage.new("RGB", (largura, altura))
     nova_imagem.putdata(resultado.pixels)
     nova_imagem.save("test_results/pigbird.png")
+```
 
     ![pigbird.png](test_results\pigbird.png)
