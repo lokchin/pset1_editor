@@ -36,19 +36,55 @@ class Imagem:
     # Getter e setter
     def get_pixel(self, x, y):
         return self.pixels[y * self.largura + x] # Corrigido erro de listas se tornando tuplas
+
     def set_pixel(self, x, y, c):
         self.pixels[y * self.largura + x] = c
 
-   # Método para aplicar por cor
+   # Método para aplicar por cor, no caso, pixel
     def aplicar_por_pixel(self, func):
         resultado = Imagem.nova(self.largura, self.altura)
-        # Não havia um for matricial correto
-        # X = "", e Y= "" estavam sendo inuteis
+        """
+        Não havia um for matricial correto
+        X = "", e Y= "" estavam implementados de forma errada
+        """
         for x in range(resultado.largura):
             for y in range(resultado.altura):
                 cor = self.get_pixel(x, y)
                 nova_cor = func(cor)
                 resultado.set_pixel(x, y, nova_cor) # X e Y trocados
+        return resultado
+    
+    # Função que extende os limites de pixel na borda
+    def get_pixel_borda(self, x, y):
+        # Aplica para as linhas
+        if x < 0:
+            x = 0
+        elif x >= self.largura:
+            x = self.largura - 1
+        # Aplica para as colunas
+        if y < 0:
+            y = 0
+        elif y >= self.altura:
+            y = self.altura - 1
+        return self.get_pixel(x, y)
+    
+    # Método para correlação de imagem com um kernel
+    def correlacionar(self, kernel):
+        resultado = Imagem.nova(self.largura, self.altura)
+        tamanho_kernel = len(kernel)
+        margem_kernel = tamanho_kernel // 2
+
+        for x in range(resultado.largura):
+            for y in range(resultado.altura):
+                soma = 0.0
+                for i in range(tamanho_kernel):
+                    for j in range(tamanho_kernel):
+                        pixel_x = x + (i - margem_kernel)
+                        pixel_y = y + (j - margem_kernel)
+                        pixel = self.get_pixel_borda(pixel_x, pixel_y)
+                        pixel_cinza = (pixel[0] + pixel[1] + pixel[2]) / 3
+                        soma += float(pixel_cinza) * kernel[i][j]
+                resultado.set_pixel(x, y, int(soma))
         return resultado
 
     def invertida(self, c=None):
@@ -203,12 +239,31 @@ if __name__ == '__main__':
     # O código neste bloco só será executado quando você executar
     # explicitamente seu script e não quando os testes estiverem
     # sendo executados. Este é um bom lugar para gerar imagens, etc.
-    
-    # Chamada que usei para inverter o peixe
+    """
+    Chamada que usei para inverter o peixe
+    """
     # imagem = Imagem.carregar("test_images/bluegill.png")
     # imagem_invertida = imagem.invertida()
     # imagem_invertida.salvar("test_results/bluegill_invertida.png")
 
+    imagem = PILImage.open("test_images/pigbird.png")
+    largura, altura = imagem.size
+    pixels = list(imagem.getdata())
+    imagem_obj = Imagem(largura, altura, pixels)
+    kernel = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    resultado = imagem_obj.correlacionar(kernel)
+    nova_imagem = PILImage.new("RGB", (largura, altura))
+    nova_imagem.putdata(resultado.pixels)
+    nova_imagem.save("test_results/pigbird.png")
     
     pass
 
