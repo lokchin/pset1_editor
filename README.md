@@ -62,4 +62,4 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
     nova_imagem.save("test_results/pigbird.png")
 ```
 
-    ![pigbird.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/pigbird.png)
+   ![pigbird.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/pigbird.png)
