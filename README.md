@@ -70,4 +70,4 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
     imagem_borrada.salvar("test_results/imagem_gato_borrada.png")
 ```
 
-   ![imagem_gato_borrada.png](test_results\imagem_gato_borrada.png)
+   ![imagem_gato_borrada.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/imagem_gato_borrada.png)
