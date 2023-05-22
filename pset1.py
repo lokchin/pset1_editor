@@ -82,8 +82,7 @@ class Imagem:
                         pixel_x = x + (i - margem_kernel)
                         pixel_y = y + (j - margem_kernel)
                         pixel = self.get_pixel_borda(pixel_x, pixel_y)
-                        pixel_cinza = (pixel[0] + pixel[1] + pixel[2]) / 3
-                        soma += float(pixel_cinza) * kernel[i][j]
+                        soma += float(pixel) * kernel[i][j]
                 resultado.set_pixel(x, y, int(soma))
         return resultado
 
@@ -91,7 +90,13 @@ class Imagem:
         return self.aplicar_por_pixel(lambda c: 255 - c) #Corrigido de 256
 
     def borrada(self, n):
-        raise NotImplementedError
+        kernel_value = 1 / (n * n) # Valor dos elementos do kernel
+        kernel = [[kernel_value] * n for _ in range(n)] # Cria a matriz do kernel que será usado para borrar
+        resultado = self.correlacionar(kernel) # Correlaciona com o kernel utilizado
+
+        # O código abaixo serve para controlar o brilho entre 0-255 
+        resultado = resultado.aplicar_por_pixel(lambda c: max(0, min(round(c), 255)))
+        return resultado
 
     def focada(self, n):
         raise NotImplementedError
@@ -239,13 +244,15 @@ if __name__ == '__main__':
     # O código neste bloco só será executado quando você executar
     # explicitamente seu script e não quando os testes estiverem
     # sendo executados. Este é um bom lugar para gerar imagens, etc.
+    
+    # Chamada que usei para inverter o peixe
     """
-    Chamada que usei para inverter o peixe
+    imagem = Imagem.carregar("test_images/bluegill.png")
+    imagem_invertida = imagem.invertida()
+    imagem_invertida.salvar("test_results/bluegill_invertida.png")
     """
-    # imagem = Imagem.carregar("test_images/bluegill.png")
-    # imagem_invertida = imagem.invertida()
-    # imagem_invertida.salvar("test_results/bluegill_invertida.png")
-
+    # Chamada que usei para aplicar o kernel correlacionado na imagem do porco
+    """
     imagem = PILImage.open("test_images/pigbird.png")
     largura, altura = imagem.size
     pixels = list(imagem.getdata())
@@ -264,7 +271,14 @@ if __name__ == '__main__':
     nova_imagem = PILImage.new("RGB", (largura, altura))
     nova_imagem.putdata(resultado.pixels)
     nova_imagem.save("test_results/pigbird.png")
-    
+    """
+    # Chamada que usei para borrar o gato
+    """
+    imagem = Imagem.carregar("test_images/cat.png")
+    imagem_borrada = imagem.borrada(5)
+    imagem_borrada.salvar("test_results/imagem_gato_borrada.png")
+    """
+
     pass
 
     # O código a seguir fará com que as janelas de Imagem.mostrar
