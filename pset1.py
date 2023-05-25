@@ -97,9 +97,9 @@ class Imagem:
         borrada = self.borrada(n)  # Aplica o efeito de borramento usando o método "borrada"
         for x in range(self.largura):
             for y in range(self.altura):
-                pixel_foco = 2 * self.get_pixel(x, y) - borrada.get_pixel(x, y)
-                resultado.set_pixel(x, y, pixel_foco)
-        resultado = resultado.aplicar_por_pixel(lambda c: max(min(round(pixel_foco), 255), 0))
+                c = 2 * self.get_pixel(x, y) - borrada.get_pixel(x, y)
+                resultado.set_pixel(x, y, c)
+        resultado = resultado.aplicar_por_pixel(lambda c: max(min(round(c), 255), 0))
         return resultado
 
 
