@@ -50,7 +50,7 @@ class TestImagem(unittest.TestCase):
 class TestInvertida(unittest.TestCase):
     def test_invertida_1(self):
         im = pset1.Imagem.carregar('test_images/centered_pixel.png')
-        resultado = im.invertida(None)
+        resultado = im.invertida()
         esperado = pset1.Imagem(11, 11,
                                 [255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
                                  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
