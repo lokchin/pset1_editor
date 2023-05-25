@@ -62,7 +62,7 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
     nova_imagem.save("test_results/pigbird.png")
 ```
 
-    ![pigbird.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/pigbird.png)
+   ![pigbird.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/pigbird.png)
 
 ```
     imagem = Imagem.carregar("test_images/cat.png")
@@ -70,4 +70,4 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
     imagem_borrada.salvar("test_results/imagem_gato_borrada.png")
 ```
 
-    ![imagem_gato_borrada.png](test_results\imagem_gato_borrada.png)
+   ![imagem_gato_borrada.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/imagem_gato_borrada.png)
