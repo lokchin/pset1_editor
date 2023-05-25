@@ -93,15 +93,15 @@ class Imagem:
         return resultado
 
     def focada(self, n):
-        resultado_borrado = self.borrada(n)
         resultado = Imagem.nova(self.largura, self.altura)
-        for x in range(resultado.largura):
-            for y in range(resultado.altura):
-                pixel_original = self.get_pixel(x, y)
-                pixel_borrado = resultado_borrado.get_pixel(x, y)
-                valor_nitido = round(2 * pixel_original - pixel_borrado)
-                resultado.set_pixel(x, y, valor_nitido)
+        borrada = self.borrada(n)  # Aplica o efeito de borramento usando o método "borrada"
+        for x in range(self.largura):
+            for y in range(self.altura):
+                pixel_foco = 2 * self.get_pixel(x, y) - borrada.get_pixel(x, y)
+                resultado.set_pixel(x, y, pixel_foco)
+        resultado = resultado.aplicar_por_pixel(lambda c: max(min(round(pixel_foco), 255), 0))
         return resultado
+
 
 
     def bordas(self):
