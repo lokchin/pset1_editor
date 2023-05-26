@@ -60,11 +60,6 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
 
    ![pigbird.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/pigbird.png)
 
-```
-    imagem = Imagem.carregar("test_images/cat.png")
-    imagem_borrada = imagem.borrada(5)
-    imagem_borrada.salvar("test_results/imagem_gato_borrada.png")
-```
 
 ## Questão 5
 
