@@ -60,15 +60,37 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
 
    ![pigbird.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/pigbird.png)
 
-```
-    imagem = Imagem.carregar("test_images/cat.png")
-    imagem_borrada = imagem.borrada(5)
-    imagem_borrada.salvar("test_results/imagem_gato_borrada.png")
-```
-
 ## Questão 5
 
+Utilizando como exemplo o kernel:
+ 
+    [[0, -1, 0],
+    [-1, 5, -1],
+    [0, -1, 0]]
 
+Adicionado à formula:
+```
+Sx,y = round(2Ix,y − Bx,y)
+```
+
+O cálculo seria:
+
+```
+Sx,y = round(
+    2 * (Ix-1, y-1)*0 + (Ix, y-1)*(-1) + (Ix+1, y-1)*0 +
+         (Ix-1, y)*(-1) + (Ix,y)*5 + (Ix+1, y)*(-1) +
+         (Ix-1, y+1)*0 + (Ix, y+1)*(-1) + (Ix+1, y+1)(*0) - Bx,y
+         )
+
+```
+Chamada:
+```
+imagem = Imagem.carregar('test_images/python.png')
+imagem_nitida = imagem.focada(11)
+imagem_nitida.salvar('test_results/python.png')
+```
+
+![python.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/python.png)
 
 ## Demonstrações extras
 
