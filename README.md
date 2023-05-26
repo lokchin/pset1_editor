@@ -42,24 +42,20 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
 ## Questão 4
 
 ```
-    imagem = PILImage.open("test_images/pigbird.png")
-    largura, altura = imagem.size
-    pixels = list(imagem.getdata())
-    imagem_obj = Imagem(largura, altura, pixels)
+    imagem = Imagem.carregar('test_images/pigbird.png')
     kernel = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]]
-    resultado = imagem_obj.correlacionar(kernel)
-    nova_imagem = PILImage.new("RGB", (largura, altura))
-    nova_imagem.putdata(resultado.pixels)
-    nova_imagem.save("test_results/pigbird.png")
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+    resultado = imagem.correlacionar(kernel)
+    resultado.salvar('test_results/pigbird.png')
 ```
 
    ![pigbird.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/pigbird.png)
@@ -70,4 +66,11 @@ O espectro de 4 pixels invertido, como está acima, está escurecendo.
     imagem_borrada.salvar("test_results/imagem_gato_borrada.png")
 ```
 
-   ![imagem_gato_borrada.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/imagem_gato_borrada.png)
+## Questão 5
+
+
+
+## Demonstrações extras
+
+![imagem_gato_borrada.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/imagem_gato_borrada.png)
+

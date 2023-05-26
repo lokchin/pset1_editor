@@ -102,8 +102,6 @@ class Imagem:
         resultado = resultado.aplicar_por_pixel(lambda c: max(min(round(c), 255), 0))
         return resultado
 
-
-
     def bordas(self):
         raise NotImplementedError
 
@@ -248,39 +246,6 @@ if __name__ == '__main__':
     # explicitamente seu script e não quando os testes estiverem
     # sendo executados. Este é um bom lugar para gerar imagens, etc.
     
-    # Chamada que usei para inverter o peixe
-    """
-    imagem = Imagem.carregar("test_images/bluegill.png")
-    imagem_invertida = imagem.invertida()
-    imagem_invertida.salvar("test_results/bluegill_invertida.png")
-    """
-    # Chamada que usei para aplicar o kernel correlacionado na imagem do porco
-    """
-    imagem = PILImage.open("test_images/pigbird.png")
-    largura, altura = imagem.size
-    pixels = list(imagem.getdata())
-    imagem_obj = Imagem(largura, altura, pixels)
-    kernel = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0]]
-    resultado = imagem_obj.correlacionar(kernel)
-    nova_imagem = PILImage.new("RGB", (largura, altura))
-    nova_imagem.putdata(resultado.pixels)
-    nova_imagem.save("test_results/pigbird.png")
-    """
-    # Chamada que usei para borrar o gato
-    """
-    imagem = Imagem.carregar("test_images/cat.png")
-    imagem_borrada = imagem.borrada(5)
-    imagem_borrada.salvar("test_results/imagem_gato_borrada.png")
-    """
 
     pass
 
