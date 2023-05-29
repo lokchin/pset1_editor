@@ -103,7 +103,19 @@ class Imagem:
         return resultado
 
     def bordas(self):
-        raise NotImplementedError
+        kernel_x = [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]  # Kernel Kx
+        kernel_y = [[-1, -2, -1], [0, 0, 0], [1, 2, 1]]  # Kernel Ky
+        gradiente_x = self.correlacionar(kernel_x)  # Calcula o gradiente horizontal
+        gradiente_y = self.correlacionar(kernel_y)  # Calcula o gradiente vertical
+        resultado = Imagem.nova(self.largura, self.altura)
+        for x in range(self.largura):
+            for y in range(self.altura):
+                gx = gradiente_x.get_pixel(x, y)
+                gy = gradiente_y.get_pixel(x, y)
+                magnitude = math.sqrt(gx ** 2 + gy ** 2)  # Calcula a magnitude do gradiente
+                magnitude = max(min(round(magnitude), 255), 0) # Arredonda e garante que o valor esteja no intervalo [0, 255]
+                resultado.set_pixel(x, y, magnitude)
+        return resultado
 
     # Abaixo deste ponto estão utilitários para carregar, salvar e mostrar
     # as imagens, bem como para a realização de testes.
@@ -247,6 +259,9 @@ if __name__ == '__main__':
     # sendo executados. Este é um bom lugar para gerar imagens, etc.
 
 
+    imagem = Imagem.carregar('test_images/construct.png')
+    bordas = imagem.bordas()
+    bordas.mostrar("test_results/construct.png")
 
     pass
 

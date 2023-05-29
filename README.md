@@ -92,6 +92,17 @@ imagem_nitida.salvar('test_results/python.png')
 
 ![python.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/python.png)
 
+## Questão 6
+
+O kernel Kx calcula o gradiente na horizontal, já o Ky, na vertical. Eles fazem uma operação de convolução e destacam a diferença de intensidade entre os pixels adjacentes referentes aos seus eixos (x, y). A combinação de Kx e Ky de valores permite a detecção de bordas na imagem.
+
+```
+    imagem = Imagem.carregar('test_images/construct.png')
+    bordas = imagem.bordas()
+    bordas.salvar("test_results/construct.png")
+```
+![construct.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/construct.png)
+
 ## Demonstrações extras
 
 ![imagem_gato_borrada.png](https://github.com/lokchin/ling_prog_pset1/blob/main/test_results/imagem_gato_borrada.png)
