@@ -35,85 +35,88 @@ class Imagem:
 
     # Getter e setter
     def get_pixel(self, x, y):
-        return self.pixels[y * self.largura + x] # Corrigido erro de listas se tornando tuplas
+        return self.pixels[y * self.largura + x] # Corrigido erro de acesso, e criada uma fórmula para mapear os índices bidimensionais em um índice unidimensional.
     
     # Função que extende os limites de pixel na borda
     def get_pixel_borda(self, x, y):
+        # Verifica se a coordenada x está fora dos limites da largura da imagem
         if x > self.largura - 1:
-            x = self.largura - 1
+            x = self.largura - 1 # Ajusta o eixo x a direita
         elif x < 0:
-            x = 0
+            x = 0 # Ajusta o eixo x a esquerda
+
+        # Verifica se a coordenada y está fora dos limites da altura da imagem
         if y > self.altura - 1:
-            y = self.altura - 1
+            y = self.altura - 1 # Ajusta o eixo y para cima
         elif y < 0:
-            y = 0
+            y = 0 # Ajusta o eixo Y para baixo
         return self.get_pixel(x, y)
 
     def set_pixel(self, x, y, c):
-        self.pixels[y * self.largura + x] = c
+        self.pixels[y * self.largura + x] = c # Aplicada a nova fórmula criada acima.
 
-   # Método para aplicar por cor, no caso, pixel
+   # Função para aplicar por cor, no caso, pixel
     def aplicar_por_pixel(self, func):
         resultado = Imagem.nova(self.largura, self.altura)
         """
         Não havia um for matricial correto
         X = "", e Y= "" estavam implementados de forma errada
         """
-        for x in range(self.largura):
+        for x in range(self.largura): # For corrigido para percorrer a imagem
             for y in range(self.altura):
                 cor = self.get_pixel(x, y)
                 novo_pixel = func(cor)
                 resultado.set_pixel(x, y, novo_pixel) # X e Y trocados
         return resultado
 
-    def invertida(self, c=None):
+    def invertida(self, c=None): # Por algum motivo, o código não rodava se não definisse c=None por padrão
         return self.aplicar_por_pixel(lambda c: 255 - c) #Corrigido de 256
     
-    # Método para correlação de imagem com um kernel
+    # Função para correlação de imagem com um kernel
     def correlacionar(self, kernel):
         resultado = Imagem.nova(self.largura, self.altura)
-        tamanho_kernel = len(kernel) // 2
+        tamanho_kernel = len(kernel) // 2 # Tamanho do kernel usado para centralizar o cálculo
         for x in range(resultado.largura):
             for y in range(resultado.altura):
-                soma = 0.0
+                soma = 0.0 # Soma das multiplicações
                 for i in range(len(kernel)):
                     for j in range(len(kernel[i])):
                         pixel_x = x - tamanho_kernel + j
                         pixel_y = y - tamanho_kernel + i
-                        soma += self.get_pixel_borda(pixel_x, pixel_y) * kernel[i][j]
+                        soma += self.get_pixel_borda(pixel_x, pixel_y) * kernel[i][j] # Imagem multiplicada com o kernel, considerando as bordas e incluindo naquele contador soma acima
                 resultado.set_pixel(x, y, soma)
         return resultado
 
     def borrada(self, n):
         kernel_valor = 1 / (n * n) # Valor dos elementos do kernel
-        kernel = [[kernel_valor] * n for _ in range(n)] # Cria a matriz do kernel que será usado para borrar
-        resultado = self.correlacionar(kernel) # Correlaciona com o kernel utilizado
+        kernel = [[kernel_valor] * n for _ in range(n)] # Matriz do kernel pra borrar
+        resultado = self.correlacionar(kernel)
         # O código abaixo serve para controlar o brilho entre 0-255 
         resultado = resultado.aplicar_por_pixel(lambda c: max(min(round(c), 255), 0))
         return resultado
 
     def focada(self, n):
         resultado = Imagem.nova(self.largura, self.altura)
-        borrada = self.borrada(n)  # Aplica o efeito de borramento usando o método "borrada"
+        borrada = self.borrada(n)  # Aplica o efeito de borramento
         for x in range(self.largura):
             for y in range(self.altura):
-                c = 2 * self.get_pixel(x, y) - borrada.get_pixel(x, y)
+                c = 2 * self.get_pixel(x, y) - borrada.get_pixel(x, y) # essa é a fórmula Sx,y = round(2Ix,y − Bx,y)
                 resultado.set_pixel(x, y, c)
-        resultado = resultado.aplicar_por_pixel(lambda c: max(min(round(c), 255), 0))
+        resultado = resultado.aplicar_por_pixel(lambda c: max(min(round(c), 255), 0)) # Assim como em borrada, ajusta o brilho
         return resultado
 
     def bordas(self):
-        kernel_x = [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]  # Kernel Kx
-        kernel_y = [[-1, -2, -1], [0, 0, 0], [1, 2, 1]]  # Kernel Ky
-        gradiente_x = self.correlacionar(kernel_x)  # Calcula o gradiente horizontal
-        gradiente_y = self.correlacionar(kernel_y)  # Calcula o gradiente vertical
+        kernel_x = [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]
+        kernel_y = [[-1, -2, -1], [0, 0, 0], [1, 2, 1]]
+        gradiente_x = self.correlacionar(kernel_x)
+        gradiente_y = self.correlacionar(kernel_y)
         resultado = Imagem.nova(self.largura, self.altura)
         for x in range(self.largura):
             for y in range(self.altura):
                 gx = gradiente_x.get_pixel(x, y)
                 gy = gradiente_y.get_pixel(x, y)
-                magnitude = math.sqrt(gx ** 2 + gy ** 2)  # Calcula a magnitude do gradiente
-                magnitude = max(min(round(magnitude), 255), 0) # Arredonda e garante que o valor esteja no intervalo [0, 255]
+                magnitude = math.sqrt(gx ** 2 + gy ** 2)  # Cálculo da magnitude do gradiente
+                magnitude = max(min(round(magnitude), 255), 0) # Arredonda e garante que o valor da magnitude esteja entre 0-255
                 resultado.set_pixel(x, y, magnitude)
         return resultado
 

@@ -67,6 +67,10 @@ class TestInvertida(unittest.TestCase):
 
     # Imagem definida e testada inversamente
     def test_invertida_2(self):
+        """
+        Funcionalidade básica: Altura definida como 1, largura 4, pixels, chamada do arquivo pset, aplicação da função invertida,
+        imagem esperada para comparação.
+        """
         altura = 1
         largura = 4
         pixels = [29, 89, 136, 200]
