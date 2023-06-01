@@ -1,7 +1,7 @@
 ## Questão 1
 
 O output esperado seria [255 - o número no array], no caso.
-[227, 167, 120, 56]
+[226, 166, 119, 55]
 O espectro de 4 pixels invertido, como está acima, está escurecendo.
 
 ## Questão 2
